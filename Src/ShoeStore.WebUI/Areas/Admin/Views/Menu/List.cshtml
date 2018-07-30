@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Johnny.ShoeStore.Domain.Entities.View_Menu>
+
+@{
+    ViewBag.Title = "Admin: All Menus";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="box-body">
+    <table id="example1" class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th class="text-right">ID</th>
+                <th>Menu Category</th>
+                <th>Menu Name</th>
+                <th>Controller</th>
+                <th>Action</th>
+                <th>IsDisplay</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text-right">@item.MenuId</td>
+                    <td>@item.MenuCategoryName</td>
+                    <td>@Html.ActionLink(item.MenuName, "Edit", new { item.MenuId })</td>
+                    <td>@Html.ActionLink(item.Controller, item.Action, item.Controller)</td>
+                    <td>@Html.ActionLink(item.Action, item.Action, item.Controller)</td>
+                    <td>@item.IsDisplay</td>
+                    <td class="text-center">
+                        @using (Html.BeginForm("Delete", "Menu"))
+                        {
+                            <a href="@Url.Action("Edit", "Menu", new { item.MenuId })" class="btn btn-default btn-xs">
+                                <span class="glyphicon glyphicon-edit" /> Edit
+                            </a>
+                            <button type="button" class="btn btn-default btn-xs" data-href="@Url.Action("Delete", "Menu", new { item.MenuId })" data-toggle="modal" data-target="#confirm-delete">
+                                <span class="glyphicon glyphicon-remove"></span> Delete
+                            </button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th class="text-right">ID</th>
+                <th>Menu Category</th>
+                <th>Menu Name</th>
+                <th>Controller</th>
+                <th>Action</th>
+                <th>IsDisplay</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </tfoot>
+    </table>
+</div><!-- /.box-body -->

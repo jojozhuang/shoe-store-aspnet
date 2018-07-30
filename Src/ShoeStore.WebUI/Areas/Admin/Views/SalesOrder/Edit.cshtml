@@ -1,0 +1,132 @@
+﻿@model Johnny.ShoeStore.Domain.Entities.SalesOrder
+@{
+    ViewBag.Title = "Admin: Edit " + @Model.SalesOrderId;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="box-body">
+    <!-- form start -->
+    @using (Html.BeginForm("Edit", "SalesOrder", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
+    {
+        <div class="">
+            @foreach (var property in ViewData.ModelMetadata.Properties)
+            {
+                switch (property.PropertyName)
+                {
+                    case "SalesOrderId":
+                        @Html.HiddenFor(m => m.SalesOrderId)
+                        break;
+                    case "Sequence":
+                        break;
+                    case "CreatedTime":
+                    case "CreatedById":
+                    case "CreatedByName":
+                    case "UpdatedTime":
+                    case "UpdatedById":
+                    case "UpdatedByName":
+                        if (!String.IsNullOrEmpty(Model.CustomerId))
+                        {
+                            <div class="form-group">
+                                <label for="input@(property.DisplayName ?? property.PropertyName)" class="col-sm-2 control-label">@(property.DisplayName ?? property.PropertyName)</label>
+                                <div class="col-sm-10">
+                                    @Html.TextBox(property.PropertyName, null, new { @class = "form-control", @for = (property.DisplayName ?? property.PropertyName), disabled = "true" })
+                                </div>
+                            </div>
+                        }
+                        break;
+                    default:
+                    <div class="form-group">
+                        <label for="input@(property.DisplayName ?? property.PropertyName)" class="col-sm-2 control-label">@(property.DisplayName ?? property.PropertyName)</label>
+                        <div class="col-sm-10">
+                            @if (property.PropertyName == "CustomerId")
+                            {
+                                @Html.DropDownList(property.PropertyName, new SelectList(ViewBag.Customers, "Id", "UserName", Model.CustomerId), new { @class = "form-control select2" })
+                            }
+                            else if (property.PropertyName == "SalesOrderStatusId")
+                            {
+                                @Html.DropDownList(property.PropertyName, new SelectList(ViewBag.SalesOrderStatuss, "SalesOrderStatusId", "SalesOrderStatusName", Model.SalesOrderStatusId), new { @class = "form-control select2" })
+                            }
+                            else
+                            {
+                                @Html.TextBox(property.PropertyName, null, new { @class = "form-control", @for = (property.DisplayName ?? property.PropertyName) })
+                            }
+                            @Html.ValidationMessage(property.PropertyName)
+                        </div>
+                    </div>
+                            break;
+                }
+            }
+        </div>
+        <div class="box box-default box-solid">
+            <div class="box-header with-border">
+                <h3 class="box-title">Items</h3>
+                <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+                </div><!-- /.box-tools -->
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <div class="box-body">
+                    <div class="box-header with-border pull-right">
+                        <button type="button" class="btn btn-success btn-sm" data-href="" data-toggle="modal" data-target="#product-add">
+                            <span class="glyphicon glyphicon-plus"></span> Add
+                        </button>
+                    </div><!-- /.box-header -->
+                    <table class="table table-bordered">
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th>Product</th>
+                            <th>Unit Price</th>
+                            <th>Quantity</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                        <tr>
+                            <td>1.</td>
+                            <td>Omron 5 Series Upper Arm Blood Pressure Monitor with Wide-Range Cuff (BP742N)</td>
+                            <td>$275.00</td>
+                            <td><input type="text" name="q" class="form-control" value="1"></td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-default btn-xs" data-href="" data-toggle="modal" data-target="#confirm-delete">
+                                    <span class="glyphicon glyphicon-remove"></span> Delete
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>1.</td>
+                            <td>Zippo Logo Pocket Lighter with Butterfly</td>
+                            <td>$16.47</td>
+                            <td><input type="text" name="q" class="form-control" value="2"></td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-default btn-xs" data-href="" data-toggle="modal" data-target="#confirm-delete">
+                                    <span class="glyphicon glyphicon-remove"></span> Delete
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>1.</td>
+                            <td>Aveeno Baby Sunblock Lotion, SPF 55, 4 Ounce</td>
+                            <td>$5.65</td>
+                            <td><input type="text" name="q" class="form-control" value="1"></td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-default btn-xs" data-href="" data-toggle="modal" data-target="#confirm-delete">
+                                    <span class="glyphicon glyphicon-remove"></span> Delete
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div><!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <ul class="pagination pagination-sm no-margin pull-right">
+                        <li><a href="#">&laquo;</a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">&raquo;</a></li>
+                    </ul>
+                </div>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+        <div class="box-footer">
+            <button type="submit" class="btn btn-info">Save</button>
+            @Html.ActionLink("Cancel", "List", null, new { @class = "btn btn-default" })
+        </div>
+    }
+</div><!-- /.box-body -->

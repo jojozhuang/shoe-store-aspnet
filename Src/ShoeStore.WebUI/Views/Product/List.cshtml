@@ -1,0 +1,16 @@
+﻿@using Johnny.ShoeStore.Domain.Entities
+@using Johnny.ShoeStore.WebUI.HtmlHelpers
+
+@model Johnny.ShoeStore.WebUI.Models.ProductsListViewModel
+
+@{
+    ViewBag.Title = "Products";
+}
+@foreach (var p in Model.Products)
+{
+    @Html.Partial("ProductSummary", p)
+}
+
+<div class="btn-group pull-right">
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x, category = Model.CurrentCategory }))
+</div>

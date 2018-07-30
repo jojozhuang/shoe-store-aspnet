@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Johnny.ShoeStore.WebUI.Areas.Admin.Models.NavigationNode>
+<ul class="sidebar-menu">
+    <li class="header">Navigation</li>
+    @foreach (var topMenu in Model)
+    {
+        <li class="treeview @((topMenu.Active == true) ? new HtmlString("active") : new HtmlString(""))">
+            <a href="#">
+                <i class="fa @topMenu.Image"></i> <span>@topMenu.NodeText</span>
+                <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                @foreach (var category in topMenu.Children)
+                {
+                    <li class="@((category.Active == true) ? new HtmlString("active") : new HtmlString(""))">
+                        <a href="#"><i class="fa fa-circle-o"></i> @category.NodeText <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu @((category.Active == true) ? new HtmlString("active") : new HtmlString(""))">
+                            @foreach (var menu in category.Children)
+                            {
+                                <li class="@((menu.Active == true) ? new HtmlString("active") : new HtmlString(""))">
+                                    <a href="@Url.Action(menu.NodeLink.Split('/')[1], menu.NodeLink.Split('/')[0])"><i class="fa fa-circle-o"></i> @menu.NodeText </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+            </ul>
+        </li>
+    }        
+</ul><!-- /.sidebar-menu -->

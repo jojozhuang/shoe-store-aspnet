@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Johnny.ShoeStore.Domain.Entities.TopMenu>
+
+@{
+    ViewBag.Title = "Admin: All Top Menus";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="box-body">
+    <table id="example1" class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th class="text-right">ID</th>
+                <th>Top Menu Name</th>
+                <th>Controller/Action</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text-right">@item.TopMenuId</td>
+                    <td>@Html.ActionLink(item.TopMenuName, "Edit", new { item.TopMenuId })</td>
+                    <td>@item.PageLink</td>
+                    <td class="text-center">
+                        @using (Html.BeginForm("Delete", "TopMenu"))
+                        {
+                            <a href="@Url.Action("Binding", "TopMenu", new { @id = item.TopMenuId, @controllername = "TopMenu" })" class="btn btn-default btn-xs">
+                                <span class="glyphicon glyphicon-edit" /> Binding
+                            </a>
+                            <a href="@Url.Action("Edit", "TopMenu", new { item.TopMenuId })" class="btn btn-default btn-xs">
+                                <span class="glyphicon glyphicon-edit" /> Edit
+                            </a>
+                            <button type="button" class="btn btn-default btn-xs" data-href="@Url.Action("Delete", "TopMenu", new { item.TopMenuId })" data-toggle="modal" data-target="#confirm-delete">
+                                <span class="glyphicon glyphicon-remove"></span> Delete
+                            </button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th class="text-right">ID</th>
+                <th>Top Menu Name</th>
+                <th>Controller/Action</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </tfoot>
+    </table>
+</div><!-- /.box-body -->

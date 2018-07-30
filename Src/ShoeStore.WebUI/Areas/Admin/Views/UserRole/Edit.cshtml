@@ -1,0 +1,40 @@
+﻿@model Johnny.ShoeStore.WebUI.Areas.Admin.Models.UserRoleViewModel
+@{
+    ViewBag.Title = "Admin: Edit " + @Model;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="box-body">
+    <!-- form start -->
+    @using (Html.BeginForm("Edit", "UserRole", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
+    {
+        @Html.HiddenFor(x => x.ControllerName)
+        <div class="">
+            <div class="form-group">
+                <label for="SelectedUserId" class="col-sm-2 control-label">User</label>
+                <div class="col-sm-10">
+                    @if(!String.IsNullOrEmpty(Model.SelectedUserId))
+                    { 
+                        @Html.DropDownList("SelectedUserId", new SelectList(ViewBag.Users, "Id", "UserName", Model.SelectedUserId), "Please select a user", new { @class = "form-control", disabled = "true" }) @* Won't be posted back *@
+                        @Html.HiddenFor(x => x.SelectedUserId) @* Will be posted back *@
+                    }
+                    else
+                    {
+                        @Html.DropDownList("SelectedUserId", new SelectList(ViewBag.Users, "Id", "UserName", Model.SelectedUserId), "Please select a user", new { @class = "form-control" })
+                    }
+    
+                    @Html.ValidationMessage("SelectedUserId")
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="SelectedRoleIds" class="col-sm-2 control-label">Role</label>
+                <div class="col-sm-10">
+                    @Html.EditorFor(model => model.Roles)
+                </div>
+            </div>
+        </div>
+        <div class="box-footer">
+            <button type="submit" class="btn btn-info">Save</button>
+            <button type="button" class="btn btn-default" id="ButtonRemoveSelection">Remove Selection</button>
+        </div>
+    }
+</div><!-- /.box-body -->

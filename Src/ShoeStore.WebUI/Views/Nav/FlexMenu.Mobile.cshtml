@@ -1,0 +1,23 @@
+﻿@using Johnny.ShoeStore.Domain.Entities;
+@model IEnumerable<ProductCategory>
+<div data-role="navbar">
+    <ul>
+        @foreach (var category in Model)
+        {
+            <li>
+                @Html.RouteLink(category.ProductCategoryName, new
+               {
+                   controller = "Product",
+                   action = "List",
+                   category = category.ProductCategoryId,
+                   page = 1
+               }, new
+               {
+                   data_transition = "fade",
+                   @class = (category.ProductCategoryId == ViewBag.SelectedCategory
+                       ? "ui-btn-active" : null)
+               })
+            </li>
+        }
+    </ul>
+</div>

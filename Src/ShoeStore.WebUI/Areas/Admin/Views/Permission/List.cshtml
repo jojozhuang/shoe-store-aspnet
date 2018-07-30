@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Johnny.ShoeStore.Domain.Entities.View_Permission>
+
+@{
+    ViewBag.Title = "Admin: All Permissions";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="box-body">
+    <table id="example1" class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th class="text-right">ID</th>
+                <th>Permission Category</th>
+                <th>Permission Name</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text-right">@item.PermissionId</td>
+                    <td>@item.PermissionCategoryName</td>
+                    <td>@Html.ActionLink(item.PermissionName, "Edit", new { item.PermissionId })</td>
+                    <td class="text-center">
+                        @using (Html.BeginForm("Delete", "Permission"))
+                        {
+                            <a href="@Url.Action("Edit", "Permission", new { item.PermissionId })" class="btn btn-default btn-xs">
+                                <span class="glyphicon glyphicon-edit" /> Edit
+                            </a>
+                            @Html.Hidden("RoleId", item.PermissionId)
+                            <button type="button" class="btn btn-default btn-xs" data-href="@Url.Action("Delete", "Permission", new { item.PermissionId })" data-toggle="modal" data-target="#confirm-delete">
+                                <span class="glyphicon glyphicon-remove"></span> Delete
+                            </button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th class="text-right">ID</th>
+                <th>Permission Category</th>
+                <th>Permission Name</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </tfoot>
+    </table>
+</div><!-- /.box-body -->

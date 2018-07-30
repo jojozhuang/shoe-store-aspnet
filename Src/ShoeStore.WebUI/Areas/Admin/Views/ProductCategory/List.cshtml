@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Johnny.ShoeStore.Domain.Entities.ProductCategory>
+
+@{
+    ViewBag.Title = "Admin: All Product Categories";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="box-body">
+    <table id="example1" class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th class="text-right">ID</th>
+                <th>Product Category Name</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text-right">@item.ProductCategoryId</td>
+                    <td>@Html.ActionLink(item.ProductCategoryName, "Edit", new { item.ProductCategoryId })</td>
+                    <td class="text-center">
+                        @using (Html.BeginForm("Delete", "ProductCategory"))
+                        {
+                            <a href="@Url.Action("Edit", "ProductCategory", new { item.ProductCategoryId })" class="btn btn-default btn-xs">
+                                <span class="glyphicon glyphicon-edit" /> Edit
+                            </a>
+                            <button type="button" class="btn btn-default btn-xs" data-href="@Url.Action("Delete", "ProductCategory", new { item.ProductCategoryId })" data-toggle="modal" data-target="#confirm-delete">
+                                <span class="glyphicon glyphicon-remove"></span> Delete
+                            </button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th class="text-right">ID</th>
+                <th>Product Category Name</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </tfoot>
+    </table>
+</div><!-- /.box-body -->

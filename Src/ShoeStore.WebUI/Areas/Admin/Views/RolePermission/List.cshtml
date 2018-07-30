@@ -1,0 +1,31 @@
+﻿@model Johnny.ShoeStore.WebUI.Areas.Admin.Models.RolePermissionViewModel
+@{
+    ViewBag.Title = "Admin: Edit RolePermission";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="box-body">
+    <!-- form start -->
+    @using (Html.BeginForm("List", "RolePermission", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
+    {
+        <div class="">
+            <div class="form-group">
+                <label for="SelectedRoleId" class="col-sm-2 control-label">Role</label>
+                <div class="col-sm-10">
+                    @Html.DropDownList("SelectedRoleId", new SelectList(ViewBag.Roles, "Id", "Name", Model.SelectedRoleId), "Please Select a role", new { @class = "form-control" })
+                    @Html.ValidationMessage("SelectedRoleId")
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="SelectedPermissionIds" class="col-sm-2 control-label">Permission</label>
+                <div class="col-sm-10">
+                    @Html.ListBoxFor(x => x.SelectedPermissionIds, new MultiSelectList(Model.Permissions, "PermissionId", "PermissionName"), new { @class = "form-control" })
+                    @Html.ValidationMessage("Permissions")
+                </div>
+            </div>
+        </div>
+        <div class="box-footer">
+            <button type="submit" class="btn btn-info">Save</button>
+            <button type="button" class="btn btn-default" id="ButtonRemoveSelection">Remove Selection</button>
+        </div>
+    }
+</div><!-- /.box-body -->

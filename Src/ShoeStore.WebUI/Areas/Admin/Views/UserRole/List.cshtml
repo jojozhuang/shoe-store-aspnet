@@ -1,0 +1,44 @@
+﻿@using Johnny.ShoeStore.WebUI.Areas.Admin.Infrastructure;
+@model IEnumerable<Johnny.ShoeStore.Domain.Entities.AppUser>
+@{
+    ViewBag.Title = "Admin: All AdminRoles";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="box-body">
+    <table id="example1" class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>User Name</th>
+                <th>Role Name</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@Html.ActionLink(item.UserName, "Edit", new { item.Id })</td>
+                    <td>@string.Join(", ", item.Roles.Select(x => Html.GetRoleName(x.RoleId)))</td>
+                    <td class="text-center">
+                        @using (Html.BeginForm("Edit", "UserRole"))
+                        {
+                            <a href="@Url.Action("Edit", "UserRole", new { item.Id })" class="btn btn-default btn-xs">
+                                <span class="glyphicon glyphicon-edit" /> Edit
+                            </a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>ID</th>
+                <th>User Name</th>
+                <th>Role Name</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </tfoot>
+    </table>
+</div><!-- /.box-body -->

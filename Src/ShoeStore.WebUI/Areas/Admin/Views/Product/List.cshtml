@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Johnny.ShoeStore.Domain.Entities.View_Product>
+
+@{
+    ViewBag.Title = "Admin: All Products";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="box-body">
+    <table id="example1" class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th class="text-right">ID</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th class="text-right">Price</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text-right">@item.ProductId</td>
+                    <td>@Html.ActionLink(item.ProductName, "Edit", new { item.ProductId })</td>
+                    <td class="text-right">@item.ProductCategoryName</td>
+                    <td class="text-right">@item.Price.ToString("c")</td>
+                    <td class="text-center">
+                        @using (Html.BeginForm("Delete", "Product"))
+                        {
+                            <a href="@Url.Action("Edit", "Product", new { item.ProductId })" class="btn btn-default btn-xs">
+                                <span class="glyphicon glyphicon-edit" /> Edit
+                            </a>
+                            <button type="button" class="btn btn-default btn-xs" data-href="@Url.Action("Delete", "Product", new { item.ProductId })" data-toggle="modal" data-target="#confirm-delete">
+                                <span class="glyphicon glyphicon-remove"></span> Delete
+                            </button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th class="text-right">ID</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th class="text-right">Price</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </tfoot>
+    </table>
+</div><!-- /.box-body -->
+
+
+
+
+
+
+
+

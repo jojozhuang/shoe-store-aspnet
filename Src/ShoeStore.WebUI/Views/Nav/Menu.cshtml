@@ -1,0 +1,16 @@
+﻿@using Johnny.ShoeStore.Domain.Entities;
+@model IEnumerable<ProductCategory>
+@Html.ActionLink("Home", "List", "Product", null,
+new { @class = "btn btn-block btn-default btn-lg" })
+@foreach (var category in Model)
+{
+    @Html.RouteLink(category.ProductCategoryName, new
+{
+        controller = "Product",
+        action = "List",
+        category = category.ProductCategoryId,
+        page = 1
+    }, new {
+        @class = "btn btn-block btn-default btn-lg" + (category.ProductCategoryId == ViewBag.SelectedCategory ? " btn-primary" : "")
+    })
+}

@@ -1,0 +1,14 @@
+﻿@using Johnny.ShoeStore.WebUI.Areas.Admin.Models;
+@if (ViewBag.ListAdds != null)
+{
+    List<ListAddModel> lams = (List<ListAddModel>)ViewBag.ListAdds;
+    <div class="box-header with-border">
+        <h3 class="box-title">
+            @foreach (var item in lams)
+            {
+                @Html.ActionLink(item.Title, item.Action, null, new { @class = "btn btn-default" });
+                @Html.Raw(" ")
+            }
+        </h3>
+    </div><!-- /.box-header -->
+}

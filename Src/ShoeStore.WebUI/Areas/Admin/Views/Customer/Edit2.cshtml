@@ -1,0 +1,81 @@
+﻿@model Johnny.ShoeStore.Domain.Entities.Customer
+@{
+    ViewBag.Title = "Admin: Edit " + @Model.CustomerName;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="box-body">
+    <!-- form start -->
+    @using (Html.BeginForm("Edit", "Customer", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
+    {
+        <div class="">
+            @foreach (var property in ViewData.ModelMetadata.Properties)
+            {
+                switch (property.PropertyName)
+                {
+                    case "CustomerId":
+                        @Html.HiddenFor(m => m.CustomerId)
+                        break;
+                    case "Password":
+                    case "Sequence":
+                        break;
+                    case "LoginTimes":
+                    case "CreatedTime":
+                    case "CreatedById":
+                    case "CreatedByName":
+                    case "UpdatedTime":
+                    case "UpdatedById":
+                    case "UpdatedByName":
+                    <div class="form-group">
+                        <label for="input@(property.DisplayName ?? property.PropertyName)" class="col-sm-2 control-label">@(property.DisplayName ?? property.PropertyName)</label>
+                        <div class="col-sm-10">
+                            @Html.TextBox(property.PropertyName, null, new { @class = "form-control", @for = (property.DisplayName ?? property.PropertyName), disabled = "true" })
+                        </div>
+                    </div>
+                        break;
+                    default:
+                    <div class="form-group">
+                        <label for="input@(property.DisplayName ?? property.PropertyName)" class="col-sm-2 control-label">@(property.DisplayName ?? property.PropertyName)</label>
+                        <div class="col-sm-10">
+                            @if (property.PropertyName == "Gender")
+                            {
+                                <div class="radio">
+                                    <label>
+                                        @Html.RadioButton(property.PropertyName, "True", new { @name = "radioGender" })
+                                        Male
+                                    </label>
+                                    <label>
+                                        @Html.RadioButton(property.PropertyName, "False", new { @name = "radioGender" })
+                                        Female
+                                    </label>
+                                </div>
+                            }
+                            else if (property.PropertyName == "IsActivated")
+                            {
+                                <div class="radio">
+                                    <label>
+                                        @Html.RadioButton(property.PropertyName, "True", new { @name = "radioIsActivated" })
+                                        True
+                                    </label>
+                                    <label>
+                                        @Html.RadioButton(property.PropertyName, "False", new { @name = "radioIsActivated" })
+                                        False
+                                    </label>
+                                </div>
+                            }
+                            else
+                            {
+                                @Html.TextBox(property.PropertyName, null, new { @class = "form-control", @for = (property.DisplayName ?? property.PropertyName) })
+                            }
+                            @Html.ValidationMessage(property.PropertyName)
+                        </div>
+                    </div>
+                            break;
+                }
+            }
+        </div>
+        <div class="box-footer">
+            <button type="submit" class="btn btn-info">Save</button>
+            @Html.ActionLink("Cancel", "List", null, new { @class = "btn btn-default" })
+        </div>
+    }
+</div><!-- /.box-body -->

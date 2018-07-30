@@ -1,0 +1,77 @@
+﻿@model Johnny.ShoeStore.Domain.Entities.Product
+@{
+    ViewBag.Title = "Admin: Edit " + @Model.ProductName;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="box-body">
+    <!-- form start -->
+    @using (Html.BeginForm("Edit", "Product", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
+    {
+        <div class="">
+            @foreach (var property in ViewData.ModelMetadata.Properties)
+            {
+                switch (property.PropertyName)
+                {
+                    case "ProductId":
+                        @Html.HiddenFor(m => m.ProductId)
+                        break;
+                    case "ImageData":
+                    case "ImageMimeType":
+                        // do nothing
+                        break;
+                    default:
+                    <div class="form-group">
+                        <label for="input@(property.DisplayName ?? property.PropertyName)" class="col-sm-2 control-label">@(property.DisplayName ?? property.PropertyName)</label>
+                        <div class="col-sm-10">
+                            @if (property.PropertyName == "ProductCategoryId")
+                            {
+                                @Html.DropDownList(property.PropertyName, new SelectList(ViewBag.ProductCategories, "ProductCategoryId", "ProductCategoryName", Model.ProductCategoryId), new { @class = "form-control select2" })
+                            }
+                            else if (property.PropertyName == "Description")
+                            {
+                                @Html.TextArea(property.PropertyName, null, new { @class = "form-control", rows = 5 })
+                            }
+                            else
+                            {
+                                @Html.TextBox(property.PropertyName, null, new { @class = "form-control", @for = (property.DisplayName ?? property.PropertyName) })
+                            }
+                            @Html.ValidationMessage(property.PropertyName)
+                        </div>
+                    </div>
+                            break;
+                }
+            }
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Image</label>
+                <div class="col-sm-10">
+                    <a class='btn' href='javascript:;'>
+                        Choose File...
+                        <input type="file" name="Image" size="40"
+                               style="position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0); opacity:0;background-color:transparent;color:transparent;"
+                               onchange='$("#upload-file-info").html($(this).val());'>
+                    </a>
+                    <span class='label label-info' id="upload-file-info"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <div class="checkbox">
+                        @if (Model.ImageData == null)
+                        {
+                            <label>No Image</label>
+                        }
+                        else
+                        {
+                            <img class="img-thumbnail" width="150" height="150"
+                                 src="@Url.Action("GetImage", "Product", new { Model.ProductId })" />
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box-footer">
+            <button type="submit" class="btn btn-info">Save</button>
+            @Html.ActionLink("Cancel", "List", null, new { @class = "btn btn-default" })
+        </div>
+    }
+</div><!-- /.box-body -->

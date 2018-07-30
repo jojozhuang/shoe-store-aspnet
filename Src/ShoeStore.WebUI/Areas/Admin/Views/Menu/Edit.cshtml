@@ -1,0 +1,62 @@
+﻿@model Johnny.ShoeStore.Domain.Entities.Menu
+@{
+    ViewBag.Title = "Admin: Edit " + @Model.MenuName;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="box-body">
+    <!-- form start -->
+    @using (Html.BeginForm("Edit", "Menu", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
+    {
+        <div class="">
+            @foreach (var property in ViewData.ModelMetadata.Properties)
+            {
+                switch (property.PropertyName)
+                {
+                    case "MenuId":
+                        @Html.Hidden(property.PropertyName)
+                        break;
+                    case "Sequence":
+                        break;
+                    default:
+                    <div class="form-group">
+                        <label for="input@(property.DisplayName ?? property.PropertyName)" class="col-sm-2 control-label">@(property.DisplayName ?? property.PropertyName)</label>
+                        <div class="col-sm-10">
+                            @if (property.PropertyName == "MenuCategoryId")
+                            {
+                                @Html.DropDownList(property.PropertyName, new SelectList(ViewBag.MenuCategories, "MenuCategoryId", "MenuCategoryName", Model.MenuCategoryId), new { @class = "form-control select2" })
+                            }
+                            else if (property.PropertyName == "PermissionId")
+                            {
+                                @Html.DropDownList(property.PropertyName, new SelectList(ViewBag.Permissions, "PermissionId", "PermissionName", Model.PermissionId), new { @class = "form-control select2" })
+                            }
+                            else if (property.PropertyName == "IsDisplay")
+                            {
+                                <div class="radio">
+                                    <label>
+                                        @Html.RadioButton(property.PropertyName, "True", new { @name = "radioIsDisplay" })
+                                        True
+                                    </label>
+                                    <label>
+                                        @Html.RadioButton(property.PropertyName, "False", new { @name = "radioIsDisplay" })
+                                        False
+                                    </label>
+                                </div>
+                            }
+                            else
+                            {
+                                @Html.TextBox(property.PropertyName, null, new { @class = "form-control", @for = (property.DisplayName ?? property.PropertyName) })
+                            }
+                            @Html.ValidationMessage(property.PropertyName)
+                        </div>
+                    </div>
+                            break;
+                }
+
+            }
+        </div>
+        <div class="box-footer">
+            <button type="submit" class="btn btn-info">Save</button>
+            @Html.ActionLink("Cancel", "List", null, new { @class = "btn btn-default" })
+        </div>
+    }
+</div><!-- /.box-body -->

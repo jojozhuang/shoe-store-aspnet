@@ -1,0 +1,7 @@
+﻿@model Johnny.ShoeStore.WebUI.Areas.Admin.Models.SelectPermissionEditorViewModel
+
+@Html.HiddenFor(x => x.PermissionId)
+@Html.HiddenFor(x => x.PermissionName)
+@Html.CheckBoxFor(x => x.Selected)
+@Html.LabelFor(x => x.Selected, Model.PermissionName)
+<br />

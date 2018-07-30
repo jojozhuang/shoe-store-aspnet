@@ -1,0 +1,31 @@
+﻿@model IEnumerable<string>
+@{
+    Layout = null;
+}
+<div class="alert alert-danger">
+    @switch (Model.Count())
+    {
+        case 0:
+            @: Something went wrong. Please try again
+            break;
+        case 1:
+        @Model.First();
+                          break;
+        default:
+        @: The following errors were encountered:
+        <ul>
+            @foreach (string error in Model)
+            {
+                <li>@error</li>
+            }
+        </ul>
+            break;
+    }
+    <a href="@Url.Action("Index", "Home")" class="btn btn-default btn-xs">
+        <span class="glyphicon glyphicon-edit" /> Ok
+    </a>
+</div>
+
+
+
+

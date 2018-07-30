@@ -1,0 +1,44 @@
+﻿@using Johnny.ShoeStore.WebUI.Areas.Admin.Infrastructure;
+@model IEnumerable<Johnny.ShoeStore.Domain.Entities.AppUser>
+@{
+    ViewBag.Title = "Admin: All Users";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="box-body">
+    <table id="example1" class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Customer Name</th>
+                <th>Email</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.ActionLink(item.UserName, "Edit", new { item.Id })</td>
+                    <td>@item.Email</td>
+                    <td class="text-center">
+                        @using (Html.BeginForm())
+                        {
+                            <a href="@Url.Action("Edit", "Customer", new { item.Id })" class="btn btn-default btn-xs">
+                                <span class="glyphicon glyphicon-edit" /> Edit
+                            </a>
+                            <button type="button" class="btn btn-default btn-xs" data-href="@Url.Action("Delete", "Customer", new { item.Id })" data-toggle="modal" data-target="#confirm-delete">
+                                <span class="glyphicon glyphicon-remove"></span> Delete
+                            </button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Customer Name</th>
+                <th>Email</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </tfoot>
+    </table>
+</div><!-- /.box-body -->

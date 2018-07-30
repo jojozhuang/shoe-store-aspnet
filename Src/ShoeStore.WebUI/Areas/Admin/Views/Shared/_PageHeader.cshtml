@@ -1,0 +1,11 @@
+﻿<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        @ViewBag.PageHeader
+        <small>@ViewBag.Management</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index", "Home")"><i class="fa fa-dashboard"></i>@ViewBag.AdminHome</a></li>
+        <li class="active">@ViewBag.PageHeader</li>
+    </ol>
+</section>

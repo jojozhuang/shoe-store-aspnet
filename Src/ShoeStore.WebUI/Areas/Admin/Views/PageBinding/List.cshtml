@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Johnny.ShoeStore.Domain.Entities.View_PageBinding>
+
+@{
+    ViewBag.Title = "Admin: All Page Bindings";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="box-body">
+    <table id="example1" class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th class="text-right">ID</th>
+                <th>Menu Category</th>
+                <th>Title</th>
+                <th>List Page</th>
+                <th>Add Page</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text-right">@item.PageBindingId</td>
+                    <td>@item.MenuCategoryName</td>
+                    <td>@Html.ActionLink(item.PageTitle, "Edit", new { item.PageBindingId })</td>
+                    <td>@item.ListMenuName</td>
+                    <td>@item.AddMenuName</td>
+                    <td class="text-center">
+                        @using (Html.BeginForm("Delete", "PageBinding"))
+                        {
+                            <a href="@Url.Action("Edit", "PageBinding", new { item.PageBindingId })" class="btn btn-default btn-xs">
+                                <span class="glyphicon glyphicon-edit" /> Edit
+                            </a>
+                            <button type="button" class="btn btn-default btn-xs" data-href="@Url.Action("Delete", "PageBinding", new { item.PageBindingId })" data-toggle="modal" data-target="#confirm-delete">
+                                <span class="glyphicon glyphicon-remove"></span> Delete
+                            </button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th class="text-right">ID</th>
+                <th>Menu Category</th>
+                <th>Title</th>
+                <th>List Page</th>
+                <th>Add Page</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </tfoot>
+    </table>
+</div><!-- /.box-body -->

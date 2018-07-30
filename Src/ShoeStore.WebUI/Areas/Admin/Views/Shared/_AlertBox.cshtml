@@ -1,0 +1,16 @@
+﻿@using Johnny.ShoeStore.WebUI.Areas.Admin.Models;
+@if (TempData["message"] != null)
+{
+    MessageModel msg = (MessageModel)TempData["message"];
+    <div class="box @msg.BoxStyle box-solid">
+        <div class="box-header with-border">
+            <h3 class="box-title">@msg.Title</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div><!-- /.box-tools -->
+        </div><!-- /.box-header -->
+        <div class="box-body">
+            @msg.Message
+        </div><!-- /.box-body -->
+    </div><!-- /.box -->
+}
