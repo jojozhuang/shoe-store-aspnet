@@ -2,7 +2,7 @@
 An online store website with responsive UI, built with ASP.NET MVC in C#.
 
 # Function
-This web application is an Admin content management system(CMS).
+This web application is an Admin content management system(CMS). The UI comes from [AdminLTE Control Panel Template](https://adminlte.io/).
 * Responsive UI for different screen size
 * Many flexible settings are provided, menu control, access control, etc.
 * Dynamic Access Control with Role and Permission Bindings
@@ -17,5 +17,3 @@ On Windows, open the project in Visual Studio, compile and run. Access http://lo
 
 # Portfolio
 Read portfolio [Shoe Store(ASP.NET)](http://jojozhuang.github.io/portfolio/shoe-store-aspnet/) to learn the main functions of this online store application.
-
-* [AdminLTE Control Panel Template](https://adminlte.io/)
