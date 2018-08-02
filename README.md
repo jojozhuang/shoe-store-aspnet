@@ -16,4 +16,4 @@ git clone https://github.com/jojozhuang/shoe-store-aspnet.git
 On Windows, open the project in Visual Studio, compile and run. Access http://localhost:1231/ in web browser, enjoy!
 
 # Portfolio
-Read portfolio [Shoe Store(ASP.NET)](http://jojozhuang.github.io/portfolio/shoe-store-aspnet/) to learn the main functions of this online store application.
+Read portfolio [Shoe Store(ASP.NET)](https://jojozhuang.github.io/portfolio/shoe-store-aspnet/) to learn the main functions of this online store application.
